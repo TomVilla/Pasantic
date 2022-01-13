@@ -59,10 +59,96 @@ function PasanticApi(app){
 
     //tommy-----------------------------------------
 
+    // -------------------------------Comienzo Luis Carlos Sanchez Plaza-----------------------------------------------
+    //agregar una pasantia a favoritos
+    router.post('/practices/addfav', (req, res)=>{
+        var idpasantia = req.body.idpasantia;
+        var idestudiante = req.body.idestudiante;
+        db.query(`INSERT INTO favorito (idpasantia, idestudiante) VALUES (${idpasantia}, ${idestudiante})`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
 
-    
+    //ver pasantias favoritas por id de estudiante
+    router.get('/practices/fav/:id', (req, res)=>{
+        var idestudiante = req.params.id;
+        db.query(`SELECT * FROM favorito f INNER JOIN pasantia p ON f.idpasantia = p.idpasantia WHERE f.idestudiante = ${idestudiante};`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
 
+    //eliminar una pasantia de favoritos
+    router.delete('/practices/delfav/:idpasantia/:idestudiante', (req, res)=>{
+        var idpasantia = req.params.idpasantia;
+        var idestudiante = req.params.idestudiante;
+        db.query(`DELETE FROM favorito WHERE idpasantia = ${idpasantia} and idestudiante = ${idestudiante}`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
 
+    //postular a una pasantia
+    router.post('/practices', (req, res)=>{
+        var body = req.body;
+        var idpasantia = body.idpasantia;
+        var idestudiante = body.idestudiante;
+        var estado = "postulado";
+        var comentarios = body.comentarios;
+      
+        db.query(`INSERT INTO postulacion (idpasantia, idestudiante, estado, comentarios) VALUES (${idpasantia}, ${idestudiante}, "${estado}", "${comentarios}")`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+                //restar 1 en el atributo disponibles de la pasantia
+                db.query(`UPDATE pasantia SET disponibilidad = disponibilidad - 1 WHERE idpasantia = ${idpasantia}`, (err, rows)=>{
+                if(err){
+                    res.status(500).json({
+                        ok: false,
+                        err
+                });
+                }else{
+                    res.json({
+                        rows
+                    });
+                }
+                }); 
+            }
+        }
+        );
+    })
 }
+// -------------------------------Fin Luis Carlos Sanchez Plaza-----------------------------------------------
 
 module.exports = PasanticApi;
