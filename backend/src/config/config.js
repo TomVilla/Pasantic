@@ -3,7 +3,7 @@ module.exports =()=>{
     return mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'root',
+        password: 'deathnote12P',
         database: 'pasantic'
     })
 }
