@@ -7,6 +7,7 @@ function PasanticApi(app){
     //tommy-----------------------------------------
     //todas las pasantias
     router.get('/practices/all', (req, res)=>{
+        
         db.query('SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa', (err, rows)=>{
             if(err){
                 res.status(500).json({
@@ -43,7 +44,7 @@ function PasanticApi(app){
     //pasantias por palabra clave
     router.get('/practices/keyword/:keyword', (req, res)=>{
         var keyword = req.params.keyword
-        db.query(`SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa WHERE p.descripcion=LIKE "%${keyword}%"`, (err, rows)=>{
+        db.query(`SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa WHERE p.descripcion LIKE '%${keyword}%'`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -128,22 +129,12 @@ function PasanticApi(app){
                     err
                 });
             }else{
+                //restar 1 en el atributo disponibles de la pasantia
+                db.query(`UPDATE pasantia SET disponibilidad = disponibilidad - 1 WHERE idpasantia = ${idpasantia}`); 
                 res.json({
                     rows
                 });
-                //restar 1 en el atributo disponibles de la pasantia
-                db.query(`UPDATE pasantia SET disponibilidad = disponibilidad - 1 WHERE idpasantia = ${idpasantia}`, (err, rows)=>{
-                if(err){
-                    res.status(500).json({
-                        ok: false,
-                        err
-                });
-                }else{
-                    res.json({
-                        rows
-                    });
-                }
-                }); 
+                
             }
         }
         );
