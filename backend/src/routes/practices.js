@@ -27,7 +27,7 @@ function PasanticApi(app){
     router.get('/practices/fecha/:fechapub', (req, res)=>{
         var fechapub = req.params.fechapub;
         //obtener las pasantias publicadas, dias antes un mes antes y 3 meses antes
-        db.query('SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa WHERE p.fechapublicacion=?', [fechapub], (err, rows)=>{
+        db.query('SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa WHERE p.fechapub=?', [fechapub], (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -44,6 +44,7 @@ function PasanticApi(app){
     //pasantias por palabra clave
     router.get('/practices/keyword/:keyword', (req, res)=>{
         var keyword = req.params.keyword
+        //obtener las pasantias que en su descripcion contengan la palabra clave
         db.query(`SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa WHERE p.descripcion LIKE '%${keyword}%'`, (err, rows)=>{
             if(err){
                 res.status(500).json({
