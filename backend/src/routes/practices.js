@@ -139,7 +139,50 @@ function PasanticApi(app){
         }
         );
     })
+    //PAUL------------------------------------------
+    //ver mis postulaciones
+    router.get('/practices/mypostulations/:id', (req, res)=>{
+        var idestudiante = req.params.id;
+        db.query(`SELECT * FROM postulacion WHERE idestudiante = ${idestudiante}`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
+
+   //eliminar una postulacion
+    router.delete('/practices/mypostulations/:id', (req, res)=>{
+        var idpostulacion = req.params.id;
+        db.query(`UPDATE pasantia SET disponibilidad = disponibilidad + 1 WHERE idpasantia = (SELECT idpasantia FROM postulacion WHERE idpostulacion = ${idpostulacion})`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                db.query(`DELETE FROM postulacion WHERE idpostulacion = ${idpostulacion}`);
+                res.json({
+                    rows
+                });
+                
+            }
+        }
+        );
+        
+
+      
+        
+    });
 }
 // -------------------------------Fin Luis Carlos Sanchez Plaza-----------------------------------------------
 
+
+    //PAUL------------------------------------------
 module.exports = PasanticApi;

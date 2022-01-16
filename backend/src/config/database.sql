@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `pasantic`.`estudiante` (
   `correo` VARCHAR(45) NOT NULL,
   `celular` VARCHAR(45) NOT NULL,
   `direccion` VARCHAR(45) NOT NULL,
+  `contra` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`idEstudiante`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
