@@ -38,10 +38,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `pasantic`.`estudiante` (
   `idEstudiante` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
-  `apellido` VARCHAR(45) NOT NULL,
-  `correo` VARCHAR(45) NOT NULL,
   `celular` VARCHAR(45) NOT NULL,
-  `direccion` VARCHAR(45) NOT NULL,
+  `universidad` VARCHAR(45) NOT NULL,
+  `carrera` VARCHAR(45) NOT NULL,
+  `correo` VARCHAR(45) NOT NULL,
   `contra` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`idEstudiante`))
 ENGINE = InnoDB
@@ -119,3 +119,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `pasantic`.`empresa` (`nombre`, `direccion`, `telefono`, `email`) VALUES ('espol', 'gye', '09', 'espol@com');
+INSERT INTO `pasantic`.`empresa` (`nombre`, `direccion`, `telefono`, `email`) VALUES ('espol1', 'gye', '09', 'espol1@com');
+INSERT INTO `pasantic`.`empresa` (`nombre`, `direccion`, `telefono`, `email`) VALUES ('espol2', 'gye', '09', 'espol2@com');
+INSERT INTO `pasantic`.`empresa` (`nombre`, `direccion`, `telefono`, `email`) VALUES ('espol4', 'gye', '09', 'espol4@com');
+INSERT INTO `pasantic`.`empresa` (`nombre`, `direccion`, `telefono`, `email`) VALUES ('espol5', 'gye', '09', 'espol5@com');
+
+INSERT INTO `pasantic`.`pasantia` (`nombre`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('informatico', '2', 32, '2022-01-10', 'hacer cosas', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`nombre`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('mecanico', '3', 42, '2022-02-11', 'hacer cosas', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`nombre`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('albañil', '4', 52, '2022-03-12', 'hacer cosas', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`nombre`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('secretario', '5', 62, '2022-04-13', 'hacer cosas', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`nombre`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('limpia casa', '6', 72, '2022-05-14', 'hacer cosas', 'ninguno');

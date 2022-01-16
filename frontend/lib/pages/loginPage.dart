@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/registerPage.dart';
-// import 'package:frontend/services/login_services.dart';
+import 'package:frontend/services/login_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -122,15 +122,18 @@ Widget _loginForm(BuildContext context) {
                 color: Colors.orange[300],
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 onPressed: () {
-                  // if(_email.text.isNotEmpty && _password.text.isNotEmpty){
-                  //   LoginService().login(_email.text, _password.text).then(
-                  //     (value) {
-                  //       if (value.body["result"] == True) {
-                  //         Navigator.of(context).pushNamed(MainPage.id);
-                  //       }
-                  //     }
-                  //   )
-                  // }
+                   if(_email.text.isNotEmpty && _password.text.isNotEmpty){
+                     LoginService().login(_email.text, _password.text).then(
+                       (value) {
+                         print(value);
+                         /*
+                         if (value.body["result"] == True) {
+                           Navigator.of(context).pushNamed(MainPage.id);
+                         }
+                         */
+                       }
+                     );
+                   }
                 },
               ),
             )
