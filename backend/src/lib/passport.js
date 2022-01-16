@@ -53,7 +53,7 @@ passport.use('local.signup', new LocalStrategy({
         }else{
             const result = rows;
             nuevoEstudiante.idEstudiante = result.insertId;
-            return done(null, nuevoEstudiante);
+            return done(null, nuevoEstudiante, );
         }
     });
 

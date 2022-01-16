@@ -7,32 +7,24 @@ function PasanticApi(app) {
     app.use('/', router);
     //Para proteger la ruta
     //const {isLoggedIn , isNotLoggedIn} = require('../lib/auth');
-    //Renderizar el formulario
-    router.get('/signup', (req, res) => {
-        res.send('Vista de Registro');
-    });
     //Recibir los datos del formulario
     router.post('/signup', passport.authenticate('local.signup', {
-        successRedirect: '/profile',
-        failureRedirect: '/signup'
+        successRedirect: '/correcto',
+        failureRedirect: '/error'
     }));
-    router.get('/signin', (req, res) => {
-        res.send('Vista de Inicio de Sesión');
-    });
     router.post('/signin', (req, res, next) => {
         passport.authenticate('local.signin', {
-            successRedirect: '/profile',
-            failureRedirect: '/signin'
-        })(req, res, next);
+            successRedirect: '/correcto',
+            failureRedirect: '/error'
+        });
     });
 
-    router.get('/profile', (req, res) => {
-        res.send('Vista de Perfil');
+    router.get('/correcto', (req, res) => {
+        res.json({"result": true})
     });
 
-    router.get('/logout', (req, res) => {
-        req.logOut();
-        res.redirect('/signin');
+    router.get('/error', (req, res) => {
+        res.json({"result": false})
     });
 }
 
