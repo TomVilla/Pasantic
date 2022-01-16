@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/mainPage.dart';
 import 'package:frontend/pages/registerPage.dart';
-import 'package:frontend/services/login_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -75,73 +75,64 @@ class _LoginPageState extends State<LoginPage> {
       )
     );
   }
-}
 
-Widget _loginForm(BuildContext context) {
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  Widget _loginForm(BuildContext context) {
+    TextEditingController _email = TextEditingController();
+    TextEditingController _password = TextEditingController();
 
-  return Form(
-    child: Column(
-      children: <Widget> [
-        TextFormField(
-          controller: _email,
-          keyboardType: TextInputType.emailAddress,
-          style: const TextStyle( color: Colors.black26 ),
-          decoration: const InputDecoration(
-            hintText: 'Ingrese el correo electronico',
-            hintStyle: TextStyle(
-              color: Colors.black26,
-              fontSize: 12
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 2)
-          ),
-        ),
-        const SizedBox(height: 10),
-        TextFormField(
-          obscureText: true,
-          controller: _password,
-          keyboardType: TextInputType.text,
-          style: const TextStyle( color: Colors.black26 ),
-          decoration: const InputDecoration(
-            hintText: 'Ingrese la contraseña',
-            hintStyle: TextStyle(
-              color: Colors.black26,
-              fontSize: 12
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 2)
-          ),
-        ),
-        const SizedBox(height: 30),
-        Row(
-          children: [
-            Expanded(
-              child: MaterialButton(
-                child: const Text('Iniciar Sesion'),
-                textColor: Colors.white,
-                color: Colors.orange[300],
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                onPressed: () {
-                   if(_email.text.isNotEmpty && _password.text.isNotEmpty){
-                     LoginService().login(_email.text, _password.text).then(
-                       (value) {
-                         print(value);
-                         /*
-                         if (value.body["result"] == True) {
-                           Navigator.of(context).pushNamed(MainPage.id);
-                         }
-                         */
-                       }
-                     );
-                   }
-                },
+    return Form(
+      child: Column(
+        children: <Widget> [
+          TextFormField(
+            controller: _email,
+            keyboardType: TextInputType.emailAddress,
+            style: const TextStyle( color: Colors.black26 ),
+            decoration: const InputDecoration(
+              hintText: 'Ingrese el correo electronico',
+              hintStyle: TextStyle(
+                color: Colors.black26,
+                fontSize: 12
               ),
-            )
-          ],
-        )
-      ]
-    ),
-  );
+              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 2)
+            ),
+          ),
+          const SizedBox(height: 10),
+          TextFormField(
+            obscureText: true,
+            controller: _password,
+            keyboardType: TextInputType.text,
+            style: const TextStyle( color: Colors.black26 ),
+            decoration: const InputDecoration(
+              hintText: 'Ingrese la contraseña',
+              hintStyle: TextStyle(
+                color: Colors.black26,
+                fontSize: 12
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 2)
+            ),
+          ),
+          const SizedBox(height: 30),
+          Row(
+            children: [
+              Expanded(
+                child: MaterialButton(
+                  child: const Text('Iniciar Sesion'),
+                  textColor: Colors.white,
+                  color: Colors.orange[300],
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  onPressed: () {
+                    if(_email.text.isNotEmpty && _password.text.isNotEmpty) {
+                      Navigator.of(context).pushNamed(MainPage.id);
+                    }
+                  },
+                ),
+              )
+            ],
+          )
+        ]
+      ),
+    );
+  }
 }
 
 class _BackgroundPaint extends CustomPainter {
