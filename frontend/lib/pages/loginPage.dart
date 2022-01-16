@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/registerPage.dart';
+// import 'package:frontend/services/login_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,8 +12,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 25,
                         ),
                       ),
-                      _loginForm(context, _email, _password),
+                      _loginForm(context),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -78,11 +77,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-Widget _loginForm(BuildContext context, TextEditingController email, TextEditingController password) {
+Widget _loginForm(BuildContext context) {
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
   return Form(
     child: Column(
       children: <Widget> [
         TextFormField(
+          controller: _email,
+          keyboardType: TextInputType.emailAddress,
           style: const TextStyle( color: Colors.black26 ),
           decoration: const InputDecoration(
             hintText: 'Ingrese el correo electronico',
@@ -92,11 +96,12 @@ Widget _loginForm(BuildContext context, TextEditingController email, TextEditing
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 2)
           ),
-          controller: email,
         ),
         const SizedBox(height: 10),
         TextFormField(
           obscureText: true,
+          controller: _password,
+          keyboardType: TextInputType.text,
           style: const TextStyle( color: Colors.black26 ),
           decoration: const InputDecoration(
             hintText: 'Ingrese la contraseña',
@@ -106,7 +111,6 @@ Widget _loginForm(BuildContext context, TextEditingController email, TextEditing
             ),
             contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 2)
           ),
-          controller: password,
         ),
         const SizedBox(height: 30),
         Row(
@@ -118,8 +122,14 @@ Widget _loginForm(BuildContext context, TextEditingController email, TextEditing
                 color: Colors.orange[300],
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 onPressed: () {
-                  // if(email.text=="developer" && password.text=="1234"){
-                  //   // Navigator.of(context).pushNamed(MainPage.id);
+                  // if(_email.text.isNotEmpty && _password.text.isNotEmpty){
+                  //   LoginService().login(_email.text, _password.text).then(
+                  //     (value) {
+                  //       if (value.body["result"] == True) {
+                  //         Navigator.of(context).pushNamed(MainPage.id);
+                  //       }
+                  //     }
+                  //   )
                   // }
                 },
               ),
