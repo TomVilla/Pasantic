@@ -1,34 +1,32 @@
 const express = require('express');
-const morgan = require('morgan');
-const path = require('path');
-const mysql = require('mysql');
 const PasanticApiPractices = require('./routes/practices');
 const PasanticApiAuth = require('./routes/aunthetication');
 const session = require('express-session');
 const MySqlSTORE= require('express-mysql-session');
 const passport = require('passport');
-
+const cors = require('cors');
 const {database}=require('./keys');
 
 //inicializaciones
 
 var app = express();
-require('./lib/passport');
+//require('./lib/passport');
 //configuraciones
 // app.set('port', process.env.PORT || 4000);
 //Funciones cada vez el cliente pide algo
 
-app.use(session({
-    secret: 'fastmysqlnodessesion',
-    resave: false,
-    save: false,
-    store: new MySqlSTORE(database)
-}));
+// app.use(session({
+//     secret: 'fastmysqlnodessesion',
+//     resave: false,
+//     save: false,
+//     store: new MySqlSTORE(database)
+// }));
 
 app.use(express.json());
+app.use(cors({origin: "http://localhost:63916"}));
 //para aunthetication
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 //Variables globales
 
 //Rutas 
