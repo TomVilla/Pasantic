@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:frontend/models/pasantia.dart';
-import 'package:frontend/services/pasantias_service.dart';
+import 'package:frontend/services/pasantia_service.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -84,8 +83,10 @@ class _MainPageState extends State<MainPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget> [
-                          Text("${_pasantia.disponibilidad} cupos disponibles"),
-                          // const Spacer(),
+                          Text(
+                            "${_pasantia.disponibilidad} cupos disponibles",
+                            style: const TextStyle(color: Colors.black38),
+                          ),
                           TextButton(
                             child: Text(
                               "Mas informacion",

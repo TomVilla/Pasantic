@@ -23,7 +23,7 @@ var app = express();
 // }));
 
 app.use(express.json());
-app.use(cors({origin: "http://localhost:63916"}));
+app.use(cors({origin: "http://localhost:53979"}));
 //para aunthetication
 // app.use(passport.initialize());
 // app.use(passport.session());
