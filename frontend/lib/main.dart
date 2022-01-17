@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/loginPage.dart';
+import 'package:frontend/pages/mainPage.dart';
 import 'package:frontend/pages/registerPage.dart';
 
 void main() {
@@ -20,9 +21,9 @@ class MyApp extends StatelessWidget {
       initialRoute: LoginPage.id,
       routes: {
         LoginPage.id: (context) => const LoginPage(),
-        RegisterPage.id: (context) => const RegisterPage()
+        RegisterPage.id: (context) => const RegisterPage(),
+        MainPage.id: (context) => const MainPage()
       },
-
     );
   }
 }
