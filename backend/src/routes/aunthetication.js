@@ -16,7 +16,7 @@ function PasanticApi(app) {
         passport.authenticate('local.signin', {
             successRedirect: '/correcto',
             failureRedirect: '/error'
-        });
+        })(req, res, next);
     });
 
     router.get('/correcto', (req, res) => {

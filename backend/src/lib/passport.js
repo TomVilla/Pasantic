@@ -34,15 +34,15 @@ passport.use('local.signup', new LocalStrategy({
 
 }, async (req, correo, contra, done) => {
     const { nombre } = req.body;
-    const { apellido } = req.body;
     const { celular } = req.body;
-    const { direccion } = req.body;
+    const { universidad } = req.body;
+    const { carrera } = req.body;
     const nuevoEstudiante = {
         nombre,
-        apellido,
-        correo,
         celular,
-        direccion,
+        universidad,
+        carrera,
+        correo,
         contra
     };
     nuevoEstudiante.contra = await helpers.encryptPass(contra);

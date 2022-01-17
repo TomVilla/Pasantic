@@ -37,6 +37,11 @@ app.use(passport.session());
 
 PasanticApiPractices(app);
 PasanticApiAuth(app);
+
+
+
+
+
 //empezar el server 
 app.listen(3000, () => {
     console.log('Server on port3000');
