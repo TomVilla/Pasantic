@@ -1,9 +1,9 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 module.exports =()=>{
     return mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'lcsanche',
+        password: 'deathnote12P',
         database: 'pasantic'
     })
-}
+};

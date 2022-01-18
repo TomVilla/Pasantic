@@ -32,21 +32,17 @@ passport.use('local.signup', new LocalStrategy({
     passwordField: 'contra',
     passReqToCallback: true
 
-
-}, async (req, done) => {
-    const { nombre } = req.body.nombre;
-    const { telefono } = req.body.telefono;
-    const { universidad } = req.body.universidad;
-    const { carrera } = req.body.carrera;
-    const { email } = req.body.email;
-    const { contra } = req.body.contra;
-
+}, async (req, correo, contra, done) => {
+    const { nombre } = req.body;
+    const { celular } =req.body;
+    const { universidad } = req.body;
+    const { carrera } = req.body;
     const nuevoEstudiante = {
         nombre,
-        telefono,
+        celular,
         universidad,
         carrera,
-        email,
+        correo,
         contra
     };
     nuevoEstudiante.contra = await helpers.encryptPass(contra);
@@ -57,7 +53,7 @@ passport.use('local.signup', new LocalStrategy({
         }else{
             const result = rows;
             nuevoEstudiante.idEstudiante = result.insertId;
-            return done(null, nuevoEstudiante, );
+            return done(null, nuevoEstudiante);
         }
     });
 

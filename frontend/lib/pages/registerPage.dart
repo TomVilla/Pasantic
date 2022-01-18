@@ -178,7 +178,7 @@ Widget _formRegisterPage(BuildContext context) {
                   onPressed: () {
                     if(_nombre.text.isNotEmpty && _celular.text.isNotEmpty && _universidad.text.isNotEmpty && _carrera.text.isNotEmpty && _email.text.isNotEmpty && _password.text.isNotEmpty){
                       EstudianteService().newEstudiante(
-                        Estudiante(_nombre.text, _celular.text, _universidad.text, _carrera.text, _email.text, _password.text)
+                        _nombre.text,_celular.text,_universidad.text,_carrera.text,_email.text,_password.text
                       ).then((value) {
                         print(value);
                         Navigator.of(context).pushNamed(LoginPage.id);
