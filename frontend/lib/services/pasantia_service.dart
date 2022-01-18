@@ -1,7 +1,6 @@
 import 'dart:convert';
-
-import 'package:frontend/models/pasantia.dart';
 import 'package:http/http.dart';
+import 'package:frontend/models/pasantia.dart';
 
 class PasantiaService {
   final String _apiURL = "http://127.0.0.1:3000/practices";

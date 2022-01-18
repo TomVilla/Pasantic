@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:frontend/models/pasantia.dart';
 import 'package:frontend/services/pasantia_service.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
-  static String id = "mainPage"; 
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -25,15 +25,77 @@ class _MainPageState extends State<MainPage> {
     return SafeArea(
       child: Scaffold(
         appBar: _isSearching? _appBarWithSearching() : _appBarWithoutSearching(),
-        drawer: Drawer(
-          child: Column(
-            children: const [
-              Text("data")
-            ],
-          ),
-        ),
+        drawer: _drawerBody(),
         body: _futureCardBody(),
       )
+    );
+  }
+
+  Widget _drawerBody() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget> [
+          DrawerHeader(
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: Image.asset('assets/photo.png').image
+              )
+            ),
+            child: Stack(
+              children: const [
+                Positioned(
+                  top: 20.0,
+                  left: 20.0,
+                  child: Text("Bienvenido",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0
+                    )
+                  )
+                )
+              ]
+            )
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.account_circle,
+              color: Colors.cyan
+            ),
+            title: const Text('Mi Perfil'),
+            onTap: (){
+              Navigator.of(context).pushNamed("profile");
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.post_add_outlined,
+              color: Colors.cyan
+            ),
+            title: const Text('Mis Postulaciones'),
+            onTap: (){},
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.star_border_outlined,
+              color: Colors.cyan
+            ),
+            title: const Text('Mis Favoritos'),
+            onTap: (){},
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.logout_outlined,
+              color: Colors.cyan
+            ),
+            title: const Text('Cerrar Sesión'),
+            onTap: () {Navigator.of(context).pushNamed("login");},
+          ),
+        ],
+      ),
     );
   }
 
@@ -50,7 +112,7 @@ class _MainPageState extends State<MainPage> {
               return Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Column(
@@ -71,7 +133,7 @@ class _MainPageState extends State<MainPage> {
                             fontStyle: FontStyle.italic
                           ),
                         ),
-                        contentPadding: const EdgeInsets.all(0),
+                        contentPadding: EdgeInsets.zero
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),

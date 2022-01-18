@@ -1,26 +1,24 @@
 class Estudiante {
   String nombre;
-  String telefono;
+  String celular;
   String universidad;
   String carrera;
-  String email;
-  String contra;
+  String correo;
 
-  Estudiante(this.nombre, this.telefono, this.universidad, this.carrera, this.email, this.contra);
+  Estudiante(this.nombre, this.celular, this.universidad, this.carrera, this.correo);
 
   factory Estudiante.fromMap(Map<String, dynamic> json) { 
       return Estudiante( 
-         json['nombre'], 
-         json['telefono'], 
-         json['universidad'], 
-         json['carrera'], 
-         json['email'], 
-         json['contra'] 
+        json['nombre'], 
+        json['celular'], 
+        json['universidad'], 
+        json['carrera'], 
+        json['correo']
       );
    }
 
    @override
   String toString() {
-    return "$nombre, $telefono, $universidad, $carrera, $email, $contra";
+    return "$nombre, $celular, $universidad, $carrera, $correo";
   }
 }

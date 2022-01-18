@@ -10,17 +10,6 @@ function PasanticApi(app) {
     //const {isLoggedIn , isNotLoggedIn} = require('../lib/auth');
     //Renderizar el formulario
     //Recibir los datos del formulario
-    /*
-    router.post('/signup', (req, res)=> {
-        passport.authenticate('local.signup', {
-            successRedirect: '/correcto',
-            failureRedirect: '/error'
-        });
-        res.json({success: true, msg: 'Successfully Saved'})
-        //res.json({success: true, msg: 'Successfully Saved'});
-    });
-       */ 
-       
     router.post('/signup', passport.authenticate('local.signup', {
         successRedirect: '/correcto',
         failureRedirect: '/error'

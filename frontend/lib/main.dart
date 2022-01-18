@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/loginPage.dart';
+
 import 'package:frontend/pages/mainPage.dart';
+import 'package:frontend/pages/loginPage.dart';
+import 'package:frontend/pages/profilePage.dart';
 import 'package:frontend/pages/registerPage.dart';
 
 void main() {
@@ -18,11 +20,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginPage.id,
+      initialRoute: "login",
       routes: {
-        LoginPage.id: (context) => const LoginPage(),
-        RegisterPage.id: (context) => const RegisterPage(),
-        MainPage.id: (context) => const MainPage()
+        "/": (context) => const MainPage(),
+        "login": (context) => const LoginPage(),
+        "profile": (context) => const ProfilePage(),
+        "register": (context) => const RegisterPage(),
       },
     );
   }

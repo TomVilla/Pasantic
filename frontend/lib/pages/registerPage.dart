@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/estudiante.dart';
-import 'package:frontend/pages/loginPage.dart';
+
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/services/estudiante_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
-  static String id = "registerPage";
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -180,8 +179,15 @@ Widget _formRegisterPage(BuildContext context) {
                       EstudianteService().newEstudiante(
                         _nombre.text,_celular.text,_universidad.text,_carrera.text,_email.text,_password.text
                       ).then((value) {
-                        print(value);
-                        Navigator.of(context).pushNamed(LoginPage.id);
+                        Navigator.of(context).pushNamed("login");
+                        Fluttertoast.showToast(
+                          msg: "El registro fue exitoso!!!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.SNACKBAR,
+                          timeInSecForIosWeb: 1,
+                          textColor: Colors.white,
+                          fontSize: 18.0
+                        );
                       });
                     }
                   },

@@ -62,6 +62,23 @@ function PasanticApi(app){
     //tommy-----------------------------------------
 
     // -------------------------------Comienzo Luis Carlos Sanchez Plaza-----------------------------------------------
+    //obtener informacion del perfil
+    router.get('/profile/:id', (req, res)=>{
+        var idestudiante = req.params.id;
+        db.query(`SELECT * FROM estudiante WHERE idestudiante = ${idestudiante};`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
+    
     //agregar una pasantia a favoritos
     router.post('/practices/addfav', (req, res)=>{
         var idpasantia = req.body.idpasantia;

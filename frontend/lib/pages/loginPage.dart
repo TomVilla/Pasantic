@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/mainPage.dart';
-import 'package:frontend/pages/registerPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
-  static String id = "loginPage";
-
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -60,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextButton(
                             child: const Text("Registrate Ahora"),
                             onPressed: () {
-                              Navigator.of(context).pushNamed(RegisterPage.id);
+                              Navigator.of(context).pushNamed("register");
                             }, 
                           )
                         ],
@@ -122,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(vertical: 18),
                   onPressed: () {
                     if(_email.text.isNotEmpty && _password.text.isNotEmpty) {
-                      Navigator.of(context).pushNamed(MainPage.id);
+                      Navigator.of(context).pushNamed("/");
                     }
                   },
                 ),
