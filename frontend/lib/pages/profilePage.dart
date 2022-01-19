@@ -16,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _infoEstudiante = EstudianteService().infoEstudiante(2);
+    _infoEstudiante = EstudianteService().infoEstudiante();
   }
 
   @override

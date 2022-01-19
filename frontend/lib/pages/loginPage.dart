@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:frontend/services/estudiante_service.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -118,7 +118,12 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(vertical: 18),
                   onPressed: () {
                     if(_email.text.isNotEmpty && _password.text.isNotEmpty) {
-                      Navigator.of(context).pushNamed("/");
+                      EstudianteService().loginEstudiante(
+                        _email.text,_password.text
+                      ).then((value) {
+                        print(value);
+                        Navigator.of(context).pushNamed("/");
+                      });
                     }
                   },
                 ),

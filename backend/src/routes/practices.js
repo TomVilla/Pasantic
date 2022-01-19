@@ -63,9 +63,8 @@ function PasanticApi(app){
 
     // -------------------------------Comienzo Luis Carlos Sanchez Plaza-----------------------------------------------
     //obtener informacion del perfil
-    router.get('/profile/:id', (req, res)=>{
-        var idestudiante = req.params.id;
-        db.query(`SELECT * FROM estudiante WHERE idestudiante = ${idestudiante};`, (err, rows)=>{
+    router.get('/profile', (req, res)=>{
+        db.query(`SELECT * FROM estudiante WHERE idestudiante = ${idEstudianteGl};`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -82,8 +81,7 @@ function PasanticApi(app){
     //agregar una pasantia a favoritos
     router.post('/practices/addfav', (req, res)=>{
         var idpasantia = req.body.idpasantia;
-        var idestudiante = req.body.idestudiante;
-        db.query(`INSERT INTO favorito (idpasantia, idestudiante) VALUES (${idpasantia}, ${idestudiante})`, (err, rows)=>{
+        db.query(`INSERT INTO favorito (idpasantia, idestudiante) VALUES (${idpasantia}, ${idEstudianteGl})`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -98,9 +96,8 @@ function PasanticApi(app){
     });
 
     //ver pasantias favoritas por id de estudiante
-    router.get('/practices/fav/:id', (req, res)=>{
-        var idestudiante = req.params.id;
-        db.query(`SELECT * FROM favorito f INNER JOIN pasantia p ON f.idpasantia = p.idpasantia WHERE f.idestudiante = ${idestudiante};`, (err, rows)=>{
+    router.get('/practices/fav', (req, res)=>{
+        db.query(`SELECT * FROM favorito f INNER JOIN pasantia p ON f.idpasantia = p.idpasantia WHERE f.idestudiante = ${idEstudianteGl};`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -115,10 +112,10 @@ function PasanticApi(app){
     });
 
     //eliminar una pasantia de favoritos
-    router.delete('/practices/delfav/:idpasantia/:idestudiante', (req, res)=>{
+    router.delete('/practices/delfav/:idpasantia', (req, res)=>{
         var idpasantia = req.params.idpasantia;
-        var idestudiante = req.params.idestudiante;
-        db.query(`DELETE FROM favorito WHERE idpasantia = ${idpasantia} and idestudiante = ${idestudiante}`, (err, rows)=>{
+        
+        db.query(`DELETE FROM favorito WHERE idpasantia = ${idpasantia} and idestudiante = ${idEstudianteGl}`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -136,11 +133,10 @@ function PasanticApi(app){
     router.post('/practices', (req, res)=>{
         var body = req.body;
         var idpasantia = body.idpasantia;
-        var idestudiante = body.idestudiante;
         var estado = "postulado";
         var comentarios = body.comentarios;
       
-        db.query(`INSERT INTO postulacion (idpasantia, idestudiante, estado, comentarios) VALUES (${idpasantia}, ${idestudiante}, "${estado}", "${comentarios}")`, (err, rows)=>{
+        db.query(`INSERT INTO postulacion (idpasantia, idestudiante, estado, comentarios) VALUES (${idpasantia}, ${idEstudianteGl}, "${estado}", "${comentarios}")`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -160,9 +156,9 @@ function PasanticApi(app){
     // -------------------------------Fin Luis Carlos Sanchez Plaza-----------------------------------------------
     //PAUL------------------------------------------
     //ver mis postulaciones
-    router.get('/practices/mypostulations/:id', (req, res)=>{
-        var idestudiante = req.params.id;
-        db.query(`SELECT * FROM postulacion WHERE idestudiante = ${idestudiante}`, (err, rows)=>{
+    router.get('/practices/mypostulations', (req, res)=>{
+        
+        db.query(`SELECT * FROM postulacion WHERE idestudiante = ${idEstudianteGl}`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -179,7 +175,7 @@ function PasanticApi(app){
    //eliminar una postulacion
     router.delete('/practices/mypostulations/:id', (req, res)=>{
         var idpostulacion = req.params.id;
-        db.query(`UPDATE pasantia SET disponibilidad = disponibilidad + 1 WHERE idpasantia = (SELECT idpasantia FROM postulacion WHERE idpostulacion = ${idpostulacion})`, (err, rows)=>{
+        db.query(`UPDATE pasantia SET disponibilidad = disponibilidad + 1 WHERE idpasantia = (SELECT idpasantia FROM postulacion WHERE idpostulacion = ${idpostulacion} AND idestudiante = ${idEstudianteGl})`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -193,11 +189,7 @@ function PasanticApi(app){
                 
             }
         }
-        );
-        
-
-      
-        
+        );    
     });
     
 }

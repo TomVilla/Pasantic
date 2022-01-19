@@ -21,9 +21,18 @@ class EstudianteService {
       }
     );
   }
-
-  Future<Estudiante> infoEstudiante(id) async {
-    Response res = await get(Uri.parse("$_apiURL/profile/$id"));
+  Future<packagedio.Response> loginEstudiante(correo, contra) async{
+    packagedio.Dio _dio = packagedio.Dio();
+    return await _dio.post(
+      "$_apiURL/signin", 
+      data:{
+        "correo":correo,
+        "contra":contra
+      }
+    );
+  }
+  Future<Estudiante> infoEstudiante() async {
+    Response res = await get(Uri.parse("$_apiURL/profile"));
 
     if(res.statusCode == 200) {
       var json = jsonDecode(res.body)["rows"][0];

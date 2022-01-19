@@ -3,20 +3,22 @@ const LocalStrategy = require('passport-local').Strategy;
 const dbConnection = require('../config/config');
 const helpers = require('../lib/helpers');
 const db = dbConnection();
+global.idEstudianteGl = undefined;
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'correo',
     passwordField: 'contra',
     passReqToCallback: true
-}, async (req, correo, contra, done) => {
-    db.query('SELECT * FROM estudiante WHERE correo =?', [correo], (err, rows) => {
+}, (req, correo, contra, done) => {
+    db.query('SELECT * FROM estudiante WHERE correo =?', [correo], async (err, rows) => {
         if (err) {
             console.error(err);
         } else {
             if (rows.length > 0) {
                 const estudiante = rows[0];
-                const validPass = helpers.matchPass(contra, estudiante.contra);
+                const validPass = await helpers.matchPass(contra, estudiante.contra);
                 if (validPass) {
-                    done(null, estudiante, console.log('Welcome'));
+                    idEstudianteGl = estudiante.idEstudiante;
+                    done(null, estudiante, console.log('Welcome ' + estudiante.nombre));
                 } else {
                     done(null, false, console.log('Incorrect Pass'));
                 }
@@ -59,11 +61,18 @@ passport.use('local.signup', new LocalStrategy({
 
 }));
 
-passport.serializeUser((nuevoEstudiante, done) => {
-    done(null, nuevoEstudiante.idEstudiante);
+passport.serializeUser((estudiante, done) => {
+    done(null, estudiante.idEstudiante);
 });
 
-passport.deserializeUser(async (idEstudiante, done) => {
-    const rows = await db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', [idEstudiante]);
-    done(null, rows);
+passport.deserializeUser((idEstudiante, done) => {
+     db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', [idEstudiante], (err, rows) => {
+        if (err) {
+            console.error(err);
+        } else {
+            if (rows.length > 0) {
+                done(null, rows[0]);
+            }
+        }
+    });
 });

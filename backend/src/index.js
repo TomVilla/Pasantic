@@ -2,25 +2,23 @@ const express = require('express');
 const PasanticApiPractices = require('./routes/practices');
 const PasanticApiAuth = require('./routes/aunthetication');
 const session = require('express-session');
-const MySqlSTORE= require('express-mysql-session');
+const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
 const cors = require('cors');
 const {database}=require('./keys');
 
 //inicializaciones
 
-var app = express();
+const app = express();
 require('./lib/passport');
-//configuraciones
-// app.set('port', process.env.PORT || 4000);
-//Funciones cada vez el cliente pide algo
 
 app.use(session({
-     secret: 'fastmysqlnodessesion',
-     resave: false,
-     save: false,
-     store: new MySqlSTORE(database)
+    secret: 'faztmysqlnodemysql',
+    resave: false,
+    save: false,
+    store: new MySQLStore(database)
 }));
+
 
 app.use(express.json());
 app.use(cors({origin: "http://localhost:8000"}));

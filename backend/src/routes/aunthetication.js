@@ -23,6 +23,7 @@ function PasanticApi(app) {
     });
 
     router.get('/correcto', (req, res) => {
+        console.log(idEstudianteGl);
         res.json({"result": true})
         
     });
