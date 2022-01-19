@@ -13,6 +13,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool _isSearching = false;
+  bool _enableSearch = false;
   late Future<List<Pasantia>> _listaPasantias;
 
   @override
@@ -27,7 +28,7 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         appBar: _isSearching? _appBarWithSearching() : _appBarWithoutSearching(),
         drawer: _drawerBody(),
-        body: _futureCardBody(),
+        body: _enableSearch? _futureCardBodySearch():_futureCardBody()
       )
     );
   }
@@ -177,6 +178,83 @@ class _MainPageState extends State<MainPage> {
     ); 
   }
 
+  Widget _futureCardBodySearch() {
+    return FutureBuilder(
+      future: _listaPasantias,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData){
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              Pasantia _pasantia = snapshot.data[index];
+              return Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget> [
+                      ListTile(
+                        title: Text(
+                          _pasantia.trabajo,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        subtitle: Text(
+                          _pasantia.empresa,
+                          style: const TextStyle(
+                            color: Colors.black38,
+                            fontStyle: FontStyle.italic
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.zero
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          _pasantia.descripcion,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(fontSize: 15)
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget> [
+                          Text(
+                            "${_pasantia.disponibilidad} cupos disponibles",
+                            style: const TextStyle(color: Colors.black38),
+                          ),
+                          TextButton(
+                            child: Text(
+                              "Mas informacion",
+                              style: TextStyle(color: Colors.orange[300]),
+                            ),
+                            onPressed: (){
+                              Navigator.pushNamed(context, "description", arguments: _pasantia);
+                            }, 
+                          )
+                        ],
+                      )
+                    ]
+                  )
+                )
+              );
+            }
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator()
+          );
+        }
+      }
+    ); 
+  }
+
   _appBarWithoutSearching () {
     return AppBar(
       leading: Builder(
@@ -218,12 +296,18 @@ class _MainPageState extends State<MainPage> {
       automaticallyImplyLeading: false,
       leading: IconButton(
           icon: const Icon(
-            Icons.clear,
+            Icons.search,
             color: Colors.white,
           ),
           onPressed: () {
             setState(() {
               _isSearching = false;
+              _enableSearch = true;
+              if(_searchController.text.isEmpty){
+                _listaPasantias = PasantiaService().getPasantias();
+              }else{
+              _listaPasantias = PasantiaService().getPasantiasbyKeyword(_searchController.text);
+              }
             });
           }),
       title: Padding(
@@ -236,6 +320,7 @@ class _MainPageState extends State<MainPage> {
           cursorColor: Colors.white,
           autofocus: true,
           decoration: const InputDecoration(
+            hintText: 'Ingrese una palabra para comenzar a buscar',
             focusColor: Colors.white,
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white)

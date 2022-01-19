@@ -35,4 +35,35 @@ class PasantiaService {
       throw Exception("Fallo la peticion de Pasantias");
     }
   }
+
+  Future<List<Pasantia>> getPasantiasbyKeyword(String keyword) async {
+    List<Pasantia> listaPasantias = [];
+    Response res = await get(Uri.parse('$_apiURL/keyword/$keyword'));
+    if(res.statusCode == 200) {
+      String body = utf8.decode(res.bodyBytes);
+      var json = jsonDecode(body);
+
+      for (var item in json['rows']) {
+        listaPasantias.add(
+          Pasantia(
+            item['idpasantia'], 
+            item['trabajo'], 
+            item['idempresa'], 
+            item['disponibilidad'], 
+            item['fechapub'], 
+            item['descripcion'], 
+            item['requisitos'],
+            item['empresa'],
+            item['direccion'],
+            item['telefono'],
+            item['email']
+          )
+        );
+      }
+      return listaPasantias;
+    } else {
+      throw Exception("Fallo la peticion de Pasantias");
+    }
+  }
 }
+
