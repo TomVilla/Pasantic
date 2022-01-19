@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/services/estudiante_service.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -121,8 +122,19 @@ class _LoginPageState extends State<LoginPage> {
                       EstudianteService().loginEstudiante(
                         _email.text,_password.text
                       ).then((value) {
-                        print(value);
-                        Navigator.of(context).pushNamed("/");
+                        if(value.data["result"]){
+                          Navigator.of(context).pushNamed("/");
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Usuario o Contraseña Incorrectos",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.SNACKBAR,
+                            timeInSecForIosWeb: 1,
+                            textColor: Colors.white,
+                            webBgColor: "linear-gradient(to right, #FF0000, #F69191)",
+                            fontSize: 18.0
+                          );
+                        }
                       });
                     }
                   },

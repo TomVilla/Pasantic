@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:frontend/models/pasantia.dart';
+import 'package:frontend/pages/descriptionPage.dart';
 import 'package:frontend/services/pasantia_service.dart';
 
 class MainPage extends StatefulWidget {
@@ -139,6 +140,7 @@ class _MainPageState extends State<MainPage> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(
                           _pasantia.descripcion,
+                          textAlign: TextAlign.justify,
                           style: const TextStyle(fontSize: 15)
                         ),
                       ),
@@ -154,7 +156,9 @@ class _MainPageState extends State<MainPage> {
                               "Mas informacion",
                               style: TextStyle(color: Colors.orange[300]),
                             ),
-                            onPressed: (){}, 
+                            onPressed: (){
+                              Navigator.pushNamed(context, "description", arguments: _pasantia);
+                            }, 
                           )
                         ],
                       )
