@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/descriptionPage.dart';
 
 import 'package:frontend/pages/mainPage.dart';
 import 'package:frontend/pages/loginPage.dart';
 import 'package:frontend/pages/profilePage.dart';
 import 'package:frontend/pages/registerPage.dart';
+import 'package:frontend/pages/descriptionPage.dart';
+import 'package:frontend/pages/myapplicationsPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         "profile": (context) => const ProfilePage(),
         "register": (context) => const RegisterPage(),
         "description": (context) => const DescriptionPage(),
+        "myapplications": (context) => const MyApplicationsPage(),
       },
     );
   }

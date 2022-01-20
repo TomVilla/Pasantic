@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/services/sistema_service.dart';
 import 'package:frontend/models/pasantia.dart';
+import 'package:frontend/services/sistema_service.dart';
 import 'package:frontend/services/pasantia_service.dart';
 
 class MainPage extends StatefulWidget {
@@ -76,7 +76,9 @@ class _MainPageState extends State<MainPage> {
               color: Colors.cyan
             ),
             title: const Text('Mis Postulaciones'),
-            onTap: (){},
+            onTap: (){
+              Navigator.of(context).pushNamed("myapplications");
+            },
           ),
           ListTile(
             leading: const Icon(
@@ -93,7 +95,7 @@ class _MainPageState extends State<MainPage> {
             ),
             title: const Text('Cerrar Sesión'),
             onTap: () {
-              SistemaService().logOutEstudiante().then((value) {
+              SistemaService().logout().then((value) {
                 print(value);
                 Navigator.of(context).pushNamed("login");
               });

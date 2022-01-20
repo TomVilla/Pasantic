@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:frontend/services/estudiante_service.dart';
-
+import 'package:frontend/services/sistema_service.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -176,7 +174,7 @@ Widget _formRegisterPage(BuildContext context) {
                   padding: const EdgeInsets.symmetric(vertical: 18),
                   onPressed: () {
                     if(_nombre.text.isNotEmpty && _celular.text.isNotEmpty && _universidad.text.isNotEmpty && _carrera.text.isNotEmpty && _email.text.isNotEmpty && _password.text.isNotEmpty){
-                      EstudianteService().newEstudiante(
+                      SistemaService().register(
                         _nombre.text,_celular.text,_universidad.text,_carrera.text,_email.text,_password.text
                       ).then((value) {
                         Navigator.of(context).pushNamed("login");

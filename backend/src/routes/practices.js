@@ -166,7 +166,7 @@ function PasanticApi(app){
     //postular a una pasantia
     router.post('/practices/post/:id', (req, res)=>{
         var idpasantia = req.params.id;
-        var estado = "postulado";
+        var estado = "Postulado";
         var comentarios = "Sin comentarios";
       
         db.query(`INSERT INTO postulacion (idpasantia, idestudiante, estado, comentarios) VALUES (${idpasantia}, ${idEstudianteGl}, "${estado}", "${comentarios}")`, (err, rows)=>{
@@ -189,7 +189,7 @@ function PasanticApi(app){
     //ver mis postulaciones
     router.get('/practices/mypostulations', (req, res)=>{
         
-        db.query(`SELECT * FROM postulacion WHERE idestudiante = ${idEstudianteGl}`, (err, rows)=>{
+        db.query(`SELECT * FROM postulacion post INNER JOIN pasantia p INNER JOIN empresa e WHERE post.idestudiante = ${idEstudianteGl} AND post.idpasantia = p.idpasantia AND p.idempresa = e.idempresa`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
