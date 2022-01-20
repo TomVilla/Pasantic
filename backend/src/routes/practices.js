@@ -114,7 +114,7 @@ function PasanticApi(app){
 
     //ver pasantias favoritas por id de estudiante
     router.get('/practices/fav', (req, res)=>{
-        db.query(`SELECT * FROM favorito f INNER JOIN pasantia p ON f.idpasantia = p.idpasantia WHERE f.idestudiante = ${idEstudianteGl};`, (err, rows)=>{
+        db.query(`SELECT * FROM favorito f INNER JOIN pasantia p INNER JOIN empresa e WHERE f.idestudiante = ${idEstudianteGl} AND f.idpasantia = p.idpasantia AND p.idempresa = e.idempresa;`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -129,10 +129,10 @@ function PasanticApi(app){
     });
 
     //eliminar una pasantia de favoritos
-    router.delete('/practices/delfav/:idpasantia', (req, res)=>{
-        var idpasantia = req.params.idpasantia;
-        
-        db.query(`DELETE FROM favorito WHERE idpasantia = ${idpasantia} and idestudiante = ${idEstudianteGl}`, (err, rows)=>{
+    router.delete('/practices/fav/:id', (req, res)=>{
+        var idfavorito = req.params.id;
+
+        db.query(`DELETE FROM favorito WHERE idfavorito = ${idfavorito};`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,

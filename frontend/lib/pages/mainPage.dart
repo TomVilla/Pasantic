@@ -86,7 +86,9 @@ class _MainPageState extends State<MainPage> {
               color: Colors.cyan
             ),
             title: const Text('Mis Favoritos'),
-            onTap: (){},
+            onTap: (){
+              Navigator.of(context).pushNamed("myfavorites");
+            },
           ),
           ListTile(
             leading: const Icon(
@@ -96,7 +98,6 @@ class _MainPageState extends State<MainPage> {
             title: const Text('Cerrar Sesión'),
             onTap: () {
               SistemaService().logout().then((value) {
-                print(value);
                 Navigator.of(context).pushNamed("login");
               });
             },
@@ -155,12 +156,19 @@ class _MainPageState extends State<MainPage> {
                         children: <Widget> [
                           Text(
                             "${_pasantia.disponibilidad} cupos disponibles",
-                            style: const TextStyle(color: Colors.black38),
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.black38
+                            ),
                           ),
                           TextButton(
                             child: Text(
                               "Mas informacion",
-                              style: TextStyle(color: Colors.orange[300]),
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.orange[300],
+                                fontWeight: FontWeight.bold
+                              ),
                             ),
                             onPressed: (){
                               Navigator.pushNamed(context, "description", arguments: _pasantia);

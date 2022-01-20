@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:frontend/models/postulacion.dart';
-import 'package:frontend/services/postulacion_service.dart';
+import 'package:frontend/models/favorito.dart';
+import 'package:frontend/services/favorito_service.dart';
 
-class MyApplicationsPage extends StatefulWidget {
-  const MyApplicationsPage({Key? key}) : super(key: key);
+class MyFavoritesPage extends StatefulWidget {
+  const MyFavoritesPage({Key? key}) : super(key: key);
 
   @override
-  _MyApplicationsPageState createState() => _MyApplicationsPageState();
+  _MyFavoritesPageState createState() => _MyFavoritesPageState();
 }
 
-class _MyApplicationsPageState extends State<MyApplicationsPage> {
-  late Future<List<Postulacion>> _postulaciones;
+class _MyFavoritesPageState extends State<MyFavoritesPage> {
+  late Future<List<Favorito>> _favoritos;
 
   @override
   void initState() {
     super.initState();
-    _postulaciones = PostulacionService().getPostulaciones();
+    _favoritos = FavoritoService().getFavoritos();
   }
 
   @override
@@ -45,21 +45,14 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
 
   Widget _futureCardBody() {
     return FutureBuilder(
-      future: _postulaciones,
+      future: _favoritos,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
-              Postulacion _info = snapshot.data[index];
-              Color? _colorEstado = Colors.orange[300];
-
-              if(_info.estado == "Aceptado") {
-                _colorEstado = Colors.green;
-              } else if (_info.estado == "Rechazado"){
-                _colorEstado = Colors.black38;
-              }
+              Favorito _info = snapshot.data[index];
 
               return Card(
                 elevation: 2,
@@ -88,7 +81,7 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
                         contentPadding: EdgeInsets.zero
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.only(top: 10, bottom: 20),
                         child: Text(
                           _info.descripcion,
                           textAlign: TextAlign.justify,
@@ -99,11 +92,10 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget> [
                           Text(
-                            _info.estado,
-                            style: TextStyle(
-                              color: _colorEstado,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold
+                            "${_info.disponibilidad} cupos disponibles",
+                            style: const TextStyle(
+                              color: Colors.black38,
+                              fontSize: 15
                             ),
                           ),
                           TextButton(
@@ -115,7 +107,7 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
                                   size: 20,
                                 ),
                                 Text(
-                                  " Eliminar Postulacion",
+                                  " Eliminar de Favoritos",
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.redAccent,
@@ -125,12 +117,12 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
                               ],
                             ),
                             onPressed: (){
-                              PostulacionService().eliminarPostulacion(_info.idpostulacion).then((value) {
+                              FavoritoService().eliminarFavorito(_info.idfavorito).then((value) {
                                 setState(() {
-                                  _postulaciones = PostulacionService().getPostulaciones();
+                                  _favoritos = FavoritoService().getFavoritos();
                                 });
                                 Fluttertoast.showToast(
-                                  msg: "La Postulacion se ha eliminado con exito",
+                                  msg: "La Pasantia se ha eliminado de Favoritos",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.SNACKBAR,
                                   textColor: Colors.white,
