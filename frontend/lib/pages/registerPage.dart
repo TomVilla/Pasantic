@@ -185,6 +185,7 @@ Widget _formRegisterPage(BuildContext context) {
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.SNACKBAR,
                           timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
                           textColor: Colors.white,
                           fontSize: 18.0
                         );
