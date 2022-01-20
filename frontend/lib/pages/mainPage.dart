@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:frontend/models/pasantia.dart';
-import 'package:frontend/pages/descriptionPage.dart';
 import 'package:frontend/services/pasantia_service.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,7 +12,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool _isSearching = false;
-  bool _enableSearch = false;
   late Future<List<Pasantia>> _listaPasantias;
 
   @override
@@ -28,7 +26,7 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         appBar: _isSearching? _appBarWithSearching() : _appBarWithoutSearching(),
         drawer: _drawerBody(),
-        body: _enableSearch? _futureCardBodySearch():_futureCardBody()
+        body: _futureCardBody()
       )
     );
   }
@@ -178,83 +176,6 @@ class _MainPageState extends State<MainPage> {
     ); 
   }
 
-  Widget _futureCardBodySearch() {
-    return FutureBuilder(
-      future: _listaPasantias,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData){
-          return ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) {
-              Pasantia _pasantia = snapshot.data[index];
-              return Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget> [
-                      ListTile(
-                        title: Text(
-                          _pasantia.trabajo,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                        subtitle: Text(
-                          _pasantia.empresa,
-                          style: const TextStyle(
-                            color: Colors.black38,
-                            fontStyle: FontStyle.italic
-                          ),
-                        ),
-                        contentPadding: EdgeInsets.zero
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          _pasantia.descripcion,
-                          textAlign: TextAlign.justify,
-                          style: const TextStyle(fontSize: 15)
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget> [
-                          Text(
-                            "${_pasantia.disponibilidad} cupos disponibles",
-                            style: const TextStyle(color: Colors.black38),
-                          ),
-                          TextButton(
-                            child: Text(
-                              "Mas informacion",
-                              style: TextStyle(color: Colors.orange[300]),
-                            ),
-                            onPressed: (){
-                              Navigator.pushNamed(context, "description", arguments: _pasantia);
-                            }, 
-                          )
-                        ],
-                      )
-                    ]
-                  )
-                )
-              );
-            }
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator()
-          );
-        }
-      }
-    ); 
-  }
-
   _appBarWithoutSearching () {
     return AppBar(
       leading: Builder(
@@ -296,34 +217,39 @@ class _MainPageState extends State<MainPage> {
       automaticallyImplyLeading: false,
       leading: IconButton(
           icon: const Icon(
-            Icons.search,
+            Icons.close_outlined,
             color: Colors.white,
           ),
           onPressed: () {
             setState(() {
               _isSearching = false;
-              _enableSearch = true;
-              if(_searchController.text.isEmpty){
-                _listaPasantias = PasantiaService().getPasantias();
-              }else{
-              _listaPasantias = PasantiaService().getPasantiasbyKeyword(_searchController.text);
-              }
+              _listaPasantias = PasantiaService().getPasantias();
             });
           }),
       title: Padding(
-        padding: const EdgeInsets.only(bottom: 10, right: 10),
+        padding: const EdgeInsets.only(bottom: 5, right: 5),
         child: TextField(
+          autofocus: true,
+          cursorColor: Colors.white,
           controller: _searchController,
           style: const  TextStyle(
             color: Colors.white,
           ),
-          cursorColor: Colors.white,
-          autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Ingrese una palabra para comenzar a buscar',
-            focusColor: Colors.white,
-            focusedBorder: UnderlineInputBorder(
+          decoration: InputDecoration(
+            hintText: 'Ingrese una palabra para comenzar a buscar',  
+            hintStyle: const TextStyle(color: Colors.white),  
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white)
+            ),
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.search_outlined, color: Colors.white),
+              onPressed: () {
+                setState(() {
+                  if (_searchController.text.isNotEmpty){
+                    _listaPasantias = PasantiaService().getPasantiasbyKeyword(_searchController.text);
+                  }
+                });
+              }, 
             )
           ),
         ),

@@ -79,9 +79,26 @@ function PasanticApi(app){
     });
     
     //agregar una pasantia a favoritos
-    router.post('/practices/addfav', (req, res)=>{
-        var idpasantia = req.body.idpasantia;
+    router.post('/practices/addfav/:id', (req, res)=>{
+        var idpasantia = req.params.id;
         db.query(`INSERT INTO favorito (idpasantia, idestudiante) VALUES (${idpasantia}, ${idEstudianteGl})`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
+
+    //verificar si la pasantia ya esta en favoritos
+    router.get('/practices/verfav/:id', (req, res)=>{
+        var idpasantia = req.params.id;
+        db.query(`SELECT * FROM favorito WHERE idestudiante = ${idEstudianteGl} AND idpasantia = ${idpasantia};`, (err, rows)=>{
             if(err){
                 res.status(500).json({
                     ok: false,
@@ -129,12 +146,28 @@ function PasanticApi(app){
         });
     });
 
+    //verificar si ya se ha postulado a una pasantia
+    router.get('/practices/verpost/:id', (req, res)=>{
+        var idpasantia = req.params.id;
+        db.query(`SELECT * FROM postulacion WHERE idestudiante = ${idEstudianteGl} AND idpasantia = ${idpasantia};`, (err, rows)=>{
+            if(err){
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }else{
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
+
     //postular a una pasantia
-    router.post('/practices', (req, res)=>{
-        var body = req.body;
-        var idpasantia = body.idpasantia;
+    router.post('/practices/post/:id', (req, res)=>{
+        var idpasantia = req.params.id;
         var estado = "postulado";
-        var comentarios = body.comentarios;
+        var comentarios = "Sin comentarios";
       
         db.query(`INSERT INTO postulacion (idpasantia, idestudiante, estado, comentarios) VALUES (${idpasantia}, ${idEstudianteGl}, "${estado}", "${comentarios}")`, (err, rows)=>{
             if(err){
@@ -147,11 +180,9 @@ function PasanticApi(app){
                 db.query(`UPDATE pasantia SET disponibilidad = disponibilidad - 1 WHERE idpasantia = ${idpasantia}`); 
                 res.json({
                     rows
-                });
-                
+                }); 
             }
-        }
-        );
+        });
     })
     // -------------------------------Fin Luis Carlos Sanchez Plaza-----------------------------------------------
     //PAUL------------------------------------------
