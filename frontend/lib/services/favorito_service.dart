@@ -7,7 +7,7 @@ class FavoritoService {
 
   Future<List<Favorito>> getFavoritos() async {
     List<Favorito> favorito = [];
-    Response res = await get(Uri.parse(_apiURL));
+    Response res = await get(Uri.parse("$_apiURL/all"));
 
     if (res.statusCode == 200) {
       String body = utf8.decode(res.bodyBytes);
@@ -16,7 +16,7 @@ class FavoritoService {
       for(var item in json){
         favorito.add(
           Favorito( 
-            item['idfavorito'],
+            item['idpasantia'],
             item['trabajo'], 
             item['empresa'],
             item['descripcion'],
@@ -30,8 +30,34 @@ class FavoritoService {
     }
   }
 
+  Future<bool> verificarFavorito(int id) async {
+    Response res = await get(Uri.parse("$_apiURL/ver/$id"));
+    
+    if (res.statusCode == 200) {
+      String body = utf8.decode(res.bodyBytes);
+      var json = jsonDecode(body);
+      if(json["rows"].length!=0) {
+        return false;
+      } else{
+        return true;
+      }
+    } else {
+      throw Exception("Fallo la verificacion de Favoritos");
+    }
+  }
+
+  Future<int> addFavorito(int id) async {
+    Response res = await post(Uri.parse("$_apiURL/add/$id"));
+
+    if (res.statusCode == 200) {
+      return res.statusCode;
+    } else {
+      throw Exception("Fallo la insercion en Favoritos");
+    }
+  }
+
   Future<int> eliminarFavorito(int id) async {
-    Response res = await delete(Uri.parse("$_apiURL/$id"));
+    Response res = await delete(Uri.parse("$_apiURL/delete/$id"));
 
     if(res.statusCode == 200) {
       return res.statusCode;

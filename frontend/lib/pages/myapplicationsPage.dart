@@ -110,7 +110,7 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
                             child: Row(
                               children: const [
                                 Icon(
-                                  Icons.delete,
+                                  Icons.delete_forever,
                                   color: Colors.red,
                                   size: 20,
                                 ),
@@ -125,17 +125,11 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
                               ],
                             ),
                             onPressed: (){
-                              PostulacionService().eliminarPostulacion(_info.idpostulacion).then((value) {
+                              PostulacionService().eliminarPostulacion(_info.idpasantia).then((value) {
                                 setState(() {
                                   _postulaciones = PostulacionService().getPostulaciones();
                                 });
-                                Fluttertoast.showToast(
-                                  msg: "La Postulacion se ha eliminado con exito",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.SNACKBAR,
-                                  textColor: Colors.white,
-                                  fontSize: 18.0
-                                );
+                                _toast("La Postulacion se ha eliminado con exito");
                               });
                             }, 
                           )
@@ -153,6 +147,17 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
           );
         }
       }
+    );
+  }
+
+  Future<bool?> _toast(String texto, {String? gradiente="linear-gradient(to right, #00b09b, #96c93d)"}) {
+    return Fluttertoast.showToast(
+      msg: texto,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.SNACKBAR,
+      textColor: Colors.white,
+      webBgColor: gradiente,
+      fontSize: 18.0
     );
   }
 }

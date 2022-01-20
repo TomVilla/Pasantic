@@ -1,15 +1,15 @@
 class Favorito {
-  int idfavorito;
+  int idpasantia;
   String trabajo;
   String empresa;
   String descripcion;
   int disponibilidad;
 
-  Favorito(this.idfavorito, this.trabajo, this.empresa, this.descripcion, this.disponibilidad);
+  Favorito(this.idpasantia, this.trabajo, this.empresa, this.descripcion, this.disponibilidad);
 
   factory Favorito.fromMap(Map<String, dynamic> json) { 
       return Favorito( 
-         json['idfavorito'],
+         json['idpasantia'],
          json['trabajo'], 
          json['empresa'],
          json['descripcion'],
@@ -19,6 +19,6 @@ class Favorito {
 
    @override
   String toString() {
-    return "$idfavorito, $trabajo, $descripcion, $empresa, $disponibilidad";
+    return "$idpasantia, $trabajo, $descripcion, $empresa, $disponibilidad";
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/models/favorito.dart';
 import 'package:frontend/services/favorito_service.dart';
+import 'package:frontend/services/postulacion_service.dart';
 
 class MyFavoritesPage extends StatefulWidget {
   const MyFavoritesPage({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
           ),
           centerTitle: true,
           title: const Text(
-            "Mis Postulaciones",
+            "Mis Favoritos",
             style: TextStyle(
               color: Colors.white
             ),
@@ -102,7 +103,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
                             child: Row(
                               children: const [
                                 Icon(
-                                  Icons.delete,
+                                  Icons.delete_forever,
                                   color: Colors.red,
                                   size: 20,
                                 ),
@@ -117,17 +118,11 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
                               ],
                             ),
                             onPressed: (){
-                              FavoritoService().eliminarFavorito(_info.idfavorito).then((value) {
+                              FavoritoService().eliminarFavorito(_info.idpasantia).then((value) {
                                 setState(() {
                                   _favoritos = FavoritoService().getFavoritos();
                                 });
-                                Fluttertoast.showToast(
-                                  msg: "La Pasantia se ha eliminado de Favoritos",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.SNACKBAR,
-                                  textColor: Colors.white,
-                                  fontSize: 18.0
-                                );
+                                _toast("La Pasantia se ha eliminado de Favoritos");
                               });
                             }, 
                           )
@@ -145,6 +140,17 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
           );
         }
       }
+    );
+  }
+
+  Future<bool?> _toast(String texto, {String? gradiente="linear-gradient(to right, #00b09b, #96c93d)"}) {
+    return Fluttertoast.showToast(
+      msg: texto,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.SNACKBAR,
+      textColor: Colors.white,
+      webBgColor: gradiente,
+      fontSize: 18.0
     );
   }
 }
