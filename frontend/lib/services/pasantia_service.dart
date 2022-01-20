@@ -62,8 +62,59 @@ class PasantiaService {
       }
       return listaPasantias;
     } else {
-      throw Exception("Fallo la peticion de Pasantias");
+      throw Exception("Fallo la busqueda de Pasantias");
+    }
+  }
+
+  Future<bool> verificarFavorito(int id) async {
+    Response res = await get(Uri.parse("$_apiURL/verfav/$id"));
+    
+    if (res.statusCode == 200) {
+      String body = utf8.decode(res.bodyBytes);
+      var json = jsonDecode(body);
+      if(json["rows"].length!=0) {
+        return false;
+      } else{
+        return true;
+      }
+    } else {
+      throw Exception("Fallo la verificacion de Favoritos");
+    }
+  }
+
+  Future<int> addPasantiaToFavoritos(int id) async {
+    Response res = await post(Uri.parse("$_apiURL/addfav/$id"));
+
+    if (res.statusCode == 200) {
+      return res.statusCode;
+    } else {
+      throw Exception("Fallo la insercion en Favoritos");
+    }
+  }
+
+  Future<bool> verificarPostulacion(int id) async {
+    Response res = await get(Uri.parse("$_apiURL/verpost/$id"));
+    
+    if (res.statusCode == 200) {
+      String body = utf8.decode(res.bodyBytes);
+      var json = jsonDecode(body);
+      if(json["rows"].length!=0) {
+        return false;
+      } else{
+        return true;
+      }
+    } else {
+      throw Exception("Fallo la verificacion de Postulacion");
+    }
+  }
+
+  Future<int> postularAPasantia(int id) async {
+    Response res = await post(Uri.parse("$_apiURL/post/$id"));
+    
+    if (res.statusCode == 200) {
+      return res.statusCode;
+    } else {
+      throw Exception("Fallo la insercion en Favoritos");
     }
   }
 }
-
