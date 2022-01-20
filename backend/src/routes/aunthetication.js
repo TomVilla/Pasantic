@@ -31,6 +31,11 @@ function PasanticApi(app) {
     router.get('/error', (req, res) => {
         res.json({"result": false})
     });
+
+    router.get('/logout', (req, res)=>{
+        res.json({"result": true})
+        req.logOut();
+    });
 }
 
 module.exports = PasanticApi;
