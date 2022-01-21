@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/pasantia.dart';
+import 'package:frontend/pages/descriptionPage.dart';
 import 'package:frontend/services/sistema_service.dart';
 import 'package:frontend/services/pasantia_service.dart';
 
@@ -162,16 +163,25 @@ class _MainPageState extends State<MainPage> {
                             ),
                           ),
                           TextButton(
-                            child: Text(
-                              "Mas informacion",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.orange[300],
-                                fontWeight: FontWeight.bold
-                              ),
+                            child: Row(
+                              children: <Widget> [
+                                Icon(
+                                  Icons.info_outline,
+                                  color: Colors.orange[300],
+                                  size: 20,
+                                ),
+                                Text(
+                                  " Mas información",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.orange[300],
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                )
+                              ]
                             ),
                             onPressed: (){
-                              Navigator.pushNamed(context, "description", arguments: _pasantia);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DescriptionPage(info: _pasantia)));
                             }, 
                           )
                         ],

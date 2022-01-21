@@ -15,13 +15,7 @@ class FavoritoService {
 
       for(var item in json){
         favorito.add(
-          Favorito( 
-            item['idpasantia'],
-            item['trabajo'], 
-            item['empresa'],
-            item['descripcion'],
-            item['disponibilidad']
-          )
+          Favorito.fromMap(item)
         );
       }
       return favorito;

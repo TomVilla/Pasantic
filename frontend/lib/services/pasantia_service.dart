@@ -15,22 +15,23 @@ class PasantiaService {
 
       for (var item in json['rows']) {
         listaPasantias.add(
-          Pasantia(
-            item['idpasantia'], 
-            item['trabajo'], 
-            item['idempresa'], 
-            item['disponibilidad'], 
-            item['fechapub'], 
-            item['descripcion'], 
-            item['requisitos'],
-            item['empresa'],
-            item['direccion'],
-            item['telefono'],
-            item['email']
-          )
+          Pasantia.fromMap(item)
         );
       }
       return listaPasantias;
+    } else {
+      throw Exception("Fallo la peticion de Pasantias");
+    }
+  }
+
+  Future<Pasantia> getPasantiasById(int id) async {
+    Response res = await get(Uri.parse('$_apiURL/findone/$id'));
+
+    if(res.statusCode == 200) {
+      String body = utf8.decode(res.bodyBytes);
+      var json = jsonDecode(body)['rows'][0];
+
+      return Pasantia.fromMap(json);
     } else {
       throw Exception("Fallo la peticion de Pasantias");
     }
@@ -45,19 +46,7 @@ class PasantiaService {
 
       for (var item in json['rows']) {
         listaPasantias.add(
-          Pasantia(
-            item['idpasantia'], 
-            item['trabajo'], 
-            item['idempresa'], 
-            item['disponibilidad'], 
-            item['fechapub'], 
-            item['descripcion'], 
-            item['requisitos'],
-            item['empresa'],
-            item['direccion'],
-            item['telefono'],
-            item['email']
-          )
+          Pasantia.fromMap(item)
         );
       }
       return listaPasantias;

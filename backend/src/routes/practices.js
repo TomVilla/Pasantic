@@ -21,6 +21,22 @@ function PasanticApi(app) {
         });
     });
 
+    router.get('/practices/findone/:id', (req, res) => {
+        var idpasantia = req.params.id;
+        db.query(`SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa WHERE p.idpasantia = ${idpasantia}`, (err, rows) => {
+            if (err) {
+                res.status(500).json({
+                    ok: false,
+                    err
+                });
+            } else {
+                res.json({
+                    rows
+                });
+            }
+        });
+    });
+
     router.get('/practices/fecha/:fechapub', (req, res) => {
         var fechapub = req.params.fechapub;
 

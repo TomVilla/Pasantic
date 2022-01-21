@@ -4,7 +4,6 @@ import 'package:frontend/pages/mainPage.dart';
 import 'package:frontend/pages/loginPage.dart';
 import 'package:frontend/pages/profilePage.dart';
 import 'package:frontend/pages/registerPage.dart';
-import 'package:frontend/pages/descriptionPage.dart';
 import 'package:frontend/pages/myfavoritesPage.dart';
 import 'package:frontend/pages/myapplicationsPage.dart';
 
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
         "login": (context) => const LoginPage(),
         "profile": (context) => const ProfilePage(),
         "register": (context) => const RegisterPage(),
-        "description": (context) => const DescriptionPage(),
         "myfavorites": (context) => const MyFavoritesPage(),
         "myapplications": (context) => const MyApplicationsPage(),
       },

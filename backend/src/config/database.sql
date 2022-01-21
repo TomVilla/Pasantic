@@ -1,4 +1,3 @@
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -28,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `pasantic`.`empresa` (
   PRIMARY KEY (`idempresa`)
 )
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -47,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `pasantic`.`estudiante` (
   PRIMARY KEY (`idEstudiante`)
 )
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -69,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `pasantic`.`pasantia` (
     REFERENCES `pasantic`.`empresa` (`idempresa`)
 )
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -92,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `pasantic`.`favorito` (
     REFERENCES `pasantic`.`pasantia` (`idpasantia`)
 )
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -131,8 +130,8 @@ INSERT INTO `pasantic`.`empresa` (`empresa`, `direccion`, `telefono`, `email`) V
 INSERT INTO `pasantic`.`empresa` (`empresa`, `direccion`, `telefono`, `email`) VALUES ('espol4', 'gye', '09', 'espol4@com');
 INSERT INTO `pasantic`.`empresa` (`empresa`, `direccion`, `telefono`, `email`) VALUES ('espol5', 'gye', '09', 'espol5@com');
 
-INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Mantenimiento de software', '2', 32, '2022-01-10', 'Diseñar, producir o mantener (programar, adaptar e integrar) componentes o subconjuntos de software (clases, módulos, pantallas, rutinas, subsistemas, programas en general) conforme a especificaciones y requerimientos de la empresa (funcionales y técnicas) para ser integrados en aplicaciones.', 'ninguno');
-INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Desarrolador de Software', '3', 42, '2022-02-11', 'Documentar los programas de acuerdo a estándares. Tanto con documentos funcionales y de arquitectura, como con comentarios en el propio código.', 'ninguno');
-INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Pasante que desarrolle Software', '4', 52, '2022-03-12', 'Somos Oktana, software house que brinda servicios para desarrollo de aplicaciones, especializada en diseño, implementación, optimización e integración de Salesforce.', 'ninguno');
-INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Desarrolador de Software', '5', 62, '2022-04-13', 'Empresa de desarrollo e innovación de tecnologías de información con soluciones integradas en software y hardware empresarial.', 'ninguno');
-INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Pasante para desarrolador de Software', '6', 72, '2022-05-14', 'Serás el responsable de atender requerimientos en el sistema ISA, Ignition y desarrollar APP para el grupo empresarial.', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Mantenimiento de software', '1', 32, '2022-01-10', 'Diseñar, producir o mantener (programar, adaptar e integrar) componentes o subconjuntos de software (clases, módulos, pantallas, rutinas, subsistemas, programas en general) conforme a especificaciones y requerimientos de la empresa (funcionales y técnicas) para ser integrados en aplicaciones.', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Desarrolador de Software', '2', 42, '2022-02-11', 'Documentar los programas de acuerdo a estándares. Tanto con documentos funcionales y de arquitectura, como con comentarios en el propio código.', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Pasante que desarrolle Software', '3', 52, '2022-03-12', 'Somos Oktana, software house que brinda servicios para desarrollo de aplicaciones, especializada en diseño, implementación, optimización e integración de Salesforce.', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Desarrolador de Software', '4', 62, '2022-04-13', 'Empresa de desarrollo e innovación de tecnologías de información con soluciones integradas en software y hardware empresarial.', 'ninguno');
+INSERT INTO `pasantic`.`pasantia` (`trabajo`, `idempresa`, `disponibilidad`, `fechapub`, `descripcion`, `requisitos`) VALUES ('Pasante para desarrolador de Software', '5', 72, '2022-05-14', 'Serás el responsable de atender requerimientos en el sistema ISA, Ignition y desarrollar APP para el grupo empresarial.', 'ninguno');

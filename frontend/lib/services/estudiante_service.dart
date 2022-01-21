@@ -11,13 +11,7 @@ class EstudianteService {
     if(res.statusCode == 200) {
       var json = jsonDecode(res.body)["rows"][0];
 
-      return Estudiante(
-        json['nombre'], 
-        json['celular'], 
-        json['universidad'], 
-        json['carrera'], 
-        json['correo'],
-      );
+      return Estudiante.fromMap(json);
     } else {
       throw Exception("Fallo la peticion de Pasantias");
     }

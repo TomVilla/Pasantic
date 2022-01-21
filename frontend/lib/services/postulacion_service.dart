@@ -15,13 +15,7 @@ class PostulacionService {
 
       for(var item in json){
         postulacion.add(
-          Postulacion( 
-            item['idpasantia'],
-            item['estado'], 
-            item['trabajo'], 
-            item['empresa'],
-            item['descripcion']
-          )
+          Postulacion.fromMap(item)
         );
       }
       return postulacion;

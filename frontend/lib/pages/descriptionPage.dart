@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:frontend/models/pasantia.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/services/favorito_service.dart';
 import 'package:frontend/services/postulacion_service.dart';
 
 class DescriptionPage extends StatefulWidget {
-  const DescriptionPage({Key? key}) : super(key: key);
+  final Pasantia info;
+
+  const DescriptionPage({Key? key, required this.info}) : super(key: key);
 
   @override
   _DescriptionPageState createState() => _DescriptionPageState();
+
 }
 
 class _DescriptionPageState extends State<DescriptionPage> {
   late bool _isEnableFavoriteButton = true;
   late bool _isEnablePostulacionButton = true;
+  late Pasantia _info;
 
   @override
-  Widget build(BuildContext context) {
-    Pasantia  _info = (ModalRoute.of(context)?.settings.arguments as Pasantia);
+  void initState() {
+    super.initState();
+    _info = widget.info;
+
     FavoritoService().verificarFavorito(_info.idpasantia).then((value) {
       setState(() {_isEnableFavoriteButton = value;});
     });
     PostulacionService().verificarPostulacion(_info.idpasantia).then((value) {
       setState(() {_isEnablePostulacionButton = value;});
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -33,7 +41,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
             icon: const Icon(Icons.arrow_back),
             color: Colors.white,
             onPressed: () {
-              Navigator.of(context).pushNamed("/");
+              Navigator.of(context).pop();
             },
           ),
           centerTitle: true,
@@ -180,14 +188,14 @@ class _DescriptionPageState extends State<DescriptionPage> {
         onPressed: _isEnablePostulacionButton?(){
           PostulacionService().postular(id).then((value) {
             if (value == 200) {
-              setState(() {_isEnableFavoriteButton = false;});
+              setState(() {_isEnablePostulacionButton = false;});
               _toast("La Postulacion ha sido exitosa");
             }
           });
         }: (){
           PostulacionService().eliminarPostulacion(id).then((value){
             if (value == 200) {
-              setState(() {_isEnableFavoriteButton = true;});
+              setState(() {_isEnablePostulacionButton = true;});
               _toast("Ya se ha postulado para esta pasantia", gradiente: "linear-gradient(to right, #FF0000, #F69191)");
             }
           });

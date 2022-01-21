@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/models/favorito.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:frontend/pages/descriptionPage.dart';
 import 'package:frontend/services/favorito_service.dart';
-import 'package:frontend/services/postulacion_service.dart';
+import 'package:frontend/services/pasantia_service.dart';
 
 class MyFavoritesPage extends StatefulWidget {
   const MyFavoritesPage({Key? key}) : super(key: key);
@@ -92,12 +93,29 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget> [
-                          Text(
-                            "${_info.disponibilidad} cupos disponibles",
-                            style: const TextStyle(
-                              color: Colors.black38,
-                              fontSize: 15
+                          TextButton(
+                            child: Row(
+                              children: <Widget> [
+                                Icon(
+                                  Icons.info_outline,
+                                  color: Colors.orange[300],
+                                  size: 20,
+                                ),
+                                Text(
+                                  " Mas información",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.orange[300],
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                              ],
                             ),
+                            onPressed: (){
+                              PasantiaService().getPasantiasById(_info.idpasantia).then((value) {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DescriptionPage(info: value)));
+                              });
+                            }, 
                           ),
                           TextButton(
                             child: Row(
