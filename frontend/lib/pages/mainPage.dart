@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/pasantia.dart';
 import 'package:frontend/pages/descriptionPage.dart';
 import 'package:frontend/services/sistema_service.dart';
@@ -181,7 +182,7 @@ class _MainPageState extends State<MainPage> {
                               ]
                             ),
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => DescriptionPage(info: _pasantia)));
+                              Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(info: _pasantia)));
                             }, 
                           )
                         ],

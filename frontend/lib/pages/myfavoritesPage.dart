@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/favorito.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/pages/descriptionPage.dart';
@@ -113,7 +114,7 @@ class _MyFavoritesPageState extends State<MyFavoritesPage> {
                             ),
                             onPressed: (){
                               PasantiaService().getPasantiasById(_info.idpasantia).then((value) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => DescriptionPage(info: value)));
+                                Navigator.push(context, CupertinoPageRoute(builder: (context) => DescriptionPage(info: value)));
                               });
                             }, 
                           ),

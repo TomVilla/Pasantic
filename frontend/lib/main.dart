@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:frontend/pages/mainPage.dart';
 import 'package:frontend/pages/loginPage.dart';
@@ -23,13 +24,27 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: "login",
-      routes: {
-        "/": (context) => const MainPage(),
-        "login": (context) => const LoginPage(),
-        "profile": (context) => const ProfilePage(),
-        "register": (context) => const RegisterPage(),
-        "myfavorites": (context) => const MyFavoritesPage(),
-        "myapplications": (context) => const MyApplicationsPage(),
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case '/':
+            return CupertinoPageRoute(
+                builder: (_) => const MainPage(), settings: settings);
+          case 'login':
+            return CupertinoPageRoute(
+                builder: (_) => const LoginPage(), settings: settings);
+          case 'profile':
+            return CupertinoPageRoute(
+                builder: (_) => const ProfilePage(), settings: settings);
+          case 'register':
+            return CupertinoPageRoute(
+                builder: (_) => const RegisterPage(), settings: settings);
+          case 'myfavorites':
+            return CupertinoPageRoute(
+                builder: (_) => const MyFavoritesPage(), settings: settings);
+          case 'myapplications':
+            return CupertinoPageRoute(
+                builder: (_) => const MyApplicationsPage(), settings: settings);
+        }
       },
     );
   }
