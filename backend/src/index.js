@@ -7,7 +7,6 @@ const passport = require('passport');
 const cors = require('cors');
 const {database}=require('./keys');
 
-//inicializaciones
 
 const app = express();
 require('./lib/passport');
@@ -22,23 +21,14 @@ app.use(session({
 
 app.use(express.json());
 app.use(cors({origin: "http://localhost:8000"}));
-//para aunthetication
+
 app.use(passport.initialize());
 app.use(passport.session());
-//Variables globales
-
-//Rutas 
-//app.use(require('./routes/index'));
-//app.use(require('./routes/aunthetication'));
 
 PasanticApiPractices(app);
 PasanticApiAuth(app);
 
 
-
-
-
-//empezar el server 
 app.listen(3000, () => {
     console.log('Server on port 3000');
 });

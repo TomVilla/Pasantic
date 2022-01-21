@@ -18,12 +18,12 @@ passport.use('local.signin', new LocalStrategy({
                 const validPass = await helpers.matchPass(contra, estudiante.contra);
                 if (validPass) {
                     idEstudianteGl = estudiante.idEstudiante;
-                    done(null, estudiante, console.log('Welcome ' + estudiante.nombre));
+                    done(null, estudiante, console.log(' '));
                 } else {
-                    done(null, false, console.log('Incorrect Pass'));
+                    done(null, false, console.log(' '));
                 }
             } else {
-                return done(null, false, console.log('El usuario no existe'));
+                return done(null, false, console.log(' '));
             }
         }
     }
@@ -48,7 +48,6 @@ passport.use('local.signup', new LocalStrategy({
         contra
     };
     nuevoEstudiante.contra = await helpers.encryptPass(contra);
-    //de esta forma se guarda la contraseña como texto plano
     db.query('INSERT INTO estudiante SET ?', [nuevoEstudiante], (err, rows)=>{
         if(err){
             console.error(err);
