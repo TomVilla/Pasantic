@@ -21,10 +21,10 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
                 const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: FlutterLogo(
-                    size: 150,
-                    style: FlutterLogoStyle.stacked,
+                  padding: EdgeInsets.zero,
+                  child: Image(
+                    image: AssetImage('assets/logo.png'),
+                    height: 200,
                   ),
                 ),
                 Container(

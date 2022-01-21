@@ -53,7 +53,7 @@ class _MyApplicationsPageState extends State<MyApplicationsPage> {
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
               Postulacion _info = snapshot.data[index];
-              Color? _colorEstado = Colors.orange[300];
+              Color? _colorEstado = Colors.cyan[400];
 
               if(_info.estado == "Aceptado") {
                 _colorEstado = Colors.green;
