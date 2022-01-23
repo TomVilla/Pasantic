@@ -36,25 +36,7 @@ function PasanticApi(app) {
             }
         });
     });
-
-    router.get('/practices/fecha/:fechapub', (req, res) => {
-        var fechapub = req.params.fechapub;
-
-        db.query('SELECT * FROM pasantia p INNER JOIN empresa e ON p.idempresa=e.idempresa WHERE p.fechapub=?', [fechapub], (err, rows) => {
-            if (err) {
-                res.status(500).json({
-                    ok: false,
-                    err
-                });
-            } else {
-                res.json({
-                    rows
-                });
-            }
-        });
-    });
-
-
+    
     router.get('/practices/keyword/:keyword', (req, res) => {
         var keyword = req.params.keyword
 
